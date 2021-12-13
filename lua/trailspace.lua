@@ -70,7 +70,7 @@ function Trailspace.setup(config)
   end
 
   -- Create highlighting
-  vim.api.nvim_exec([[hi default link Trailspace Error]], false)
+  vim.api.nvim_exec([[hi default TrailSpace ctermbg=167 guibg=indianred]], false)
 end
 
 -- Module config
@@ -100,7 +100,7 @@ function Trailspace.highlight()
 
   -- Don't add match id on top of existing one
   if H.window_matches[win_id] == nil then
-    local match_id = vim.fn.matchadd('Trailspace', [[\s\+$]])
+    local match_id = vim.fn.matchadd('TrailSpace', [[\s\+$]])
     H.window_matches[win_id] = { id = match_id }
   end
 end
