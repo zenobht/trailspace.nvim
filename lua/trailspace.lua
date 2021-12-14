@@ -84,7 +84,7 @@ Trailspace.config = {
 --- Highlight trailing whitespace
 function Trailspace.highlight()
   -- Highlight only in normal mode
-  if H.is_disabled() or vim.fn.mode() ~= 'n' then
+  if H.is_disabled() or vim.fn.mode() ~= 'n' or H.is_blacklisted_filetype() then
     Trailspace.unhighlight()
     return
   end
@@ -172,6 +172,18 @@ function H.apply_config(config)
   Trailspace.config = config
 end
 
+function H.is_blacklisted_filetype()
+  local filetype = vim.bo.filetype
+  local blacklist = vim.g.trailspace_blacklist_filetype or {}
+  for index, value in ipairs(blacklist) do
+    if value == filetype then
+      return true
+    end
+  end
+
+  return false
+end
+
 function H.is_disabled()
   return vim.g.trailspace_disable == true or vim.b.trailspace_disable == true
 end
@@ -180,4 +192,4 @@ function H.is_buffer_normal(buf_id)
   return vim.api.nvim_buf_get_option(buf_id or 0, 'buftype') == ''
 end
 
-return Trailspace 
+return Trailspace
